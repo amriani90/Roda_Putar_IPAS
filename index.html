@@ -1,0 +1,129 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Roda Putar IPAS Kelas X</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#dbeafe,#f5f3ff,#cffafe);font-family:Arial,sans-serif;color:#172554}.app{max-width:1050px;margin:auto;padding:16px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px}.panel{background:white;border-radius:24px;padding:22px;margin:14px 0;box-shadow:0 12px 35px #1e3a8a16}.hero{text-align:center}.tag{display:inline-block;padding:7px 12px;border-radius:99px;background:#dbeafe;color:#1d4ed8;font-weight:800;font-size:.85rem}h1{font-size:clamp(2rem,5vw,3.2rem);margin:12px 0}.hero p{color:#475569;line-height:1.5}.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:center}.wheelbox{position:relative;max-width:540px;margin:auto}.wheelbox svg{display:block;width:100%;transition:transform 4.4s cubic-bezier(.12,.78,.12,1);filter:drop-shadow(0 8px 10px #33415533)}.pointer{position:absolute;z-index:2;left:calc(50% - 18px);top:-4px;border-left:18px solid transparent;border-right:18px solid transparent;border-top:38px solid #f59e0b}.btn{border:0;border-radius:15px;padding:15px 20px;min-height:55px;font-size:1rem;font-weight:900;cursor:pointer;touch-action:manipulation}.primary{background:linear-gradient(120deg,#2563eb,#6d28d9);color:white;box-shadow:0 5px 0 #312e81}.secondary{background:#e0e7ff;color:#312e81}.btn:disabled{opacity:.5;cursor:not-allowed}.sound{background:white;border:1px solid #c7d2fe;border-radius:12px;padding:10px;font-weight:800}.spin{text-align:center;margin-top:12px}.status,.tip{color:#64748b;font-size:.9rem;line-height:1.5;margin-top:12px}.pill{display:inline-block;background:#eff6ff;padding:6px 10px;border-radius:99px;font-size:.8rem;font-weight:800;margin:3px}.empty{padding:25px;border:2px dashed #cbd5e1;border-radius:18px;text-align:center;color:#64748b;line-height:1.6}.qcard{background:#f8fafc;border:2px solid #c7d2fe;border-radius:18px;padding:18px}.qtext{font-size:clamp(1.25rem,2.6vw,1.75rem);font-weight:850;line-height:1.4;margin:14px 0}.choices{display:grid;gap:9px;margin:14px 0}.choice{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:12px;border:2px solid #cbd5e1;border-radius:13px;background:#fff;font-weight:750;color:#172554;font-size:1rem;line-height:1.4}.choice:disabled{cursor:default}.choice.correct{background:#f0fdf4;border-color:#16a34a;color:#166534}.choice.incorrect{background:#fef2f2;border-color:#dc2626;color:#991b1b}.choice b{display:inline-grid;place-items:center;flex:0 0 30px;height:30px;border-radius:9px;background:#e2e8f0}.choice.correct b{background:#16a34a;color:#fff}.choice.incorrect b{background:#dc2626;color:#fff}.answer{border-top:1px solid #cbd5e1;padding-top:14px;line-height:1.6}.answer strong{color:#166534}.choice-feedback{font-weight:800;margin:12px 0;color:#334155}.actions{display:flex;gap:10px;margin-top:14px}.actions .btn{flex:1}.hidden{display:none!important}h2{margin-top:12px}@media(max-width:760px){.layout{grid-template-columns:1fr}.panel{padding:16px}.actions{flex-direction:column}.app{padding:10px}}
+</style></head><body><div class="app">
+<div class="top"><strong>🎡 IPAS ARENA | Kelas X SMK</strong><button id="sound" class="sound">🔊 Suara: Aktif</button></div>
+<section class="panel hero"><span class="tag">RODA PUTAR PEMBELAJARAN</span><h1>Perubahan Wujud Zat</h1><p>Putar roda untuk memilih salah satu dari 21 soal IPAS. Roda tetap pada posisi berhenti. Soal yang sudah dijawab ditandai hijau dan tidak akan terpilih lagi.</p></section>
+<div class="layout"><section class="panel"><div class="wheelbox"><div class="pointer"></div><svg id="wheel" viewBox="0 0 500 500" aria-label="Roda putar 21 tantangan"></svg></div><div class="spin"><button id="spin" class="btn primary">🎡 PUTAR RODA!</button><div id="status" class="status">Tekan tombol untuk memilih tantangan secara acak.</div><div><span class="pill">21 tantangan</span><span class="pill">Soal tidak berulang</span><span class="pill">✓ Hijau = selesai</span></div></div></section>
+<section class="panel"><span class="tag">TANTANGAN TERPILIH</span><h2 id="heading">Siap bermain?</h2><div id="empty" class="empty">🎲<br><br>Tekan tombol <b>PUTAR RODA!</b><br>Roda akan berhenti pada satu soal. Soal yang sudah selesai tidak akan diulang.</div><div id="card" class="qcard hidden"><div id="label" class="tag">TANTANGAN 01</div><div id="question" class="qtext"></div><div id="choices" class="choices"></div><div id="choiceFeedback" class="choice-feedback hidden" aria-live="polite"></div><div id="answer" class="answer hidden"></div></div><div class="actions"><button id="again" class="btn secondary" disabled>🔄 PUTAR LAGI</button><button id="reveal" class="btn primary" disabled>💡 LIHAT JAWABAN</button></div><p class="tip">Penanda roda: <b style="color:#15803d">hijau dengan tanda ✓</b> berarti soal sudah selesai. Setiap soal hanya muncul satu kali sampai semua 21 soal selesai.</p></section></div>
+<div class="tip" style="text-align:center">Dapat digunakan di komputer, proyektor, dan papan interaktif digital.</div></div>
+<script>
+const data=[
+{q:"Es batu di atas meja berubah menjadi air. Perubahan wujud ini disebut …",o:["Membeku","Mencair","Menyublim","Mengembun"],c:1,e:"Mencair adalah perubahan padat menjadi cair. Es menyerap kalor dari lingkungan."},
+{q:"Air di dalam freezer berubah menjadi es. Proses ini disebut …",o:["Menguap","Mengembun","Membeku","Menyublim"],c:2,e:"Membeku adalah perubahan cair menjadi padat. Air melepaskan kalor ke lingkungan."},
+{q:"Titik-titik air muncul di luar gelas berisi es. Penyebabnya adalah …",o:["Air merembes dari dalam gelas","Uap air di udara melepaskan kalor lalu mengembun","Es berubah langsung menjadi gas","Gelas menghasilkan air"],c:1,e:"Uap air di udara mendingin di permukaan gelas, melepaskan kalor, lalu berubah menjadi cair."},
+{q:"Pakaian basah mengering saat dijemur karena air mengalami …",o:["Pembekuan","Pengembunan","Penguapan","Pengkristalan"],c:2,e:"Air menyerap kalor lalu berubah dari cair menjadi gas melalui penguapan."},
+{q:"Kapur barus mengecil tanpa terlihat mencair. Peristiwa ini disebut …",o:["Mencair","Menyublim","Membeku","Mengembun"],c:1,e:"Menyublim adalah perubahan padat langsung menjadi gas dan menyerap kalor."},
+{q:"Uap air berubah langsung menjadi kristal es. Perubahan ini disebut …",o:["Deposisi/mengkristal","Menguap","Mencair","Mendidih"],c:0,e:"Deposisi adalah perubahan gas langsung menjadi padat dan melepaskan kalor."},
+{q:"Kelompok perubahan wujud yang menyerap kalor adalah …",o:["Membeku, mengembun, mengkristal","Mencair, menguap, menyublim","Membeku, mencair, mengembun","Mengembun, menyublim, membeku"],c:1,e:"Mencair, menguap, dan menyublim menyerap kalor dari lingkungan."},
+{q:"Kelompok perubahan wujud yang melepaskan kalor adalah …",o:["Mencair dan menguap","Menguap dan menyublim","Membeku, mengembun, mengkristal","Mencair dan menyublim"],c:2,e:"Membeku, mengembun, dan deposisi/mengkristal melepaskan kalor ke lingkungan."},
+{q:"Es batu dimasukkan ke dalam jus. Mengapa es mencair?",o:["Es memberikan kalor kepada jus","Es menyerap kalor dari jus yang lebih hangat","Tidak ada pertukaran energi","Jus kehilangan seluruh kalor"],c:1,e:"Kalor berpindah dari jus yang lebih hangat ke es. Es menyerap kalor dan mencair."},
+{q:"Uap air menyentuh tutup panci yang dingin lalu menjadi tetesan. Ini disebut …",o:["Menyublim","Membeku","Mengembun","Mencair"],c:2,e:"Uap melepaskan kalor ke tutup dingin dan berubah menjadi cair melalui pengembunan."},
+{q:"Genangan air lebih cepat kering saat cuaca panas dan berangin karena …",o:["Kalor dan aliran udara membantu penguapan","Air berubah menjadi es","Udara mengubah air menjadi batu","Air melepaskan kalor lalu membeku"],c:0,e:"Suhu tinggi membantu penguapan, sedangkan angin membawa uap air menjauh dari permukaan."},
+{q:"Pernyataan yang benar tentang mencair dan membeku adalah …",o:["Keduanya menyerap kalor","Keduanya melepaskan kalor","Mencair menyerap kalor, membeku melepaskan kalor","Mencair melepaskan kalor, membeku menyerap kalor"],c:2,e:"Mencair adalah padat ke cair dan menyerap kalor. Membeku adalah cair ke padat dan melepaskan kalor."},
+{q:"Lilin padat di dekat api menjadi cair. Lilin sedang …",o:["Melepaskan kalor","Menerima kalor","Mengembun","Menyublim seluruhnya"],c:1,e:"Lilin menyerap kalor dari api sehingga meleleh atau mencair."},
+{q:"Saat air murni mendidih pada tekanan tetap, suhunya umumnya …",o:["Terus naik tanpa batas","Tetap selama proses mendidih berlangsung","Langsung menjadi di bawah 0°C","Selalu turun ke suhu ruang"],c:1,e:"Kalor selama mendidih digunakan untuk perubahan wujud, sehingga suhu tetap sampai proses selesai."},
+{q:"Perubahan wujud dari cair menjadi gas disebut …",o:["Kondensasi","Sublimasi","Penguapan","Deposisi"],c:2,e:"Penguapan adalah perubahan cair menjadi gas dengan menyerap kalor."},
+{q:"Embun muncul di daun pada pagi hari. Peristiwa ini menunjukkan …",o:["Penguapan yang menyerap kalor","Pengembunan yang melepaskan kalor","Pencairan yang melepaskan kalor","Penyubliman yang menyerap kalor"],c:1,e:"Embun terbentuk saat uap air mengembun menjadi cair dan melepaskan kalor."},
+{q:"Pernyataan ilmiah yang tepat tentang es dan jus adalah …",o:["Dingin berpindah dari es ke jus","Kalor berpindah dari jus ke es","Es tidak menerima energi","Jus berubah menjadi padat"],c:1,e:"Yang berpindah adalah kalor, bukan dingin. Kalor berpindah dari jus yang lebih hangat ke es."},
+{q:"Apa yang terjadi pada partikel es saat menerima kalor dan mencair?",o:["Partikel berhenti bergerak","Susunan partikel menjadi lebih bebas sehingga es menjadi cair","Partikel berubah menjadi partikel lain","Massa es bertambah"],c:1,e:"Es menyerap kalor; partikel dapat mengatasi susunan padat sehingga zat berubah menjadi cair."},
+{q:"Contoh perubahan wujud yang melepaskan kalor adalah …",o:["Es krim meleleh","Air menguap dari genangan","Air membeku menjadi es","Kapur barus menyublim"],c:2,e:"Saat air membeku menjadi es, air melepaskan kalor ke lingkungan."},
+{q:"Menyublim merupakan perubahan dari … dan proses ini … kalor.",o:["Gas ke cair; melepaskan","Padat ke gas; menyerap","Cair ke padat; menyerap","Padat ke cair; melepaskan"],c:1,e:"Menyublim adalah perubahan padat langsung menjadi gas dan menyerap kalor."},
+{q:"Saat es krim meleleh di luar freezer, kalor berpindah …",o:["Dari es krim ke lingkungan saja","Dari lingkungan ke es krim","Tidak ada kalor yang berpindah","Dari tempat dingin ke tempat panas"],c:1,e:"Es krim menyerap kalor dari lingkungan sehingga mencair."}
+]
+const colors=["#2563eb","#7c3aed","#0891b2","#db2777","#ea580c","#0f766e","#4f46e5"],svg=document.getElementById('wheel');
+const used=new Set();
+function draw(high=-1){
+  svg.innerHTML='';
+  let cx=250,cy=250,r=235,step=2*Math.PI/data.length;
+  for(let i=0;i<data.length;i++){
+    let a=-Math.PI/2+i*step,b=a+step,x1=cx+r*Math.cos(a),y1=cy+r*Math.sin(a),x2=cx+r*Math.cos(b),y2=cy+r*Math.sin(b);
+    let p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',`M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2} Z`);
+    p.setAttribute('fill',used.has(i)?'#16a34a':(i===high?'#facc15':colors[i%colors.length]));
+    p.setAttribute('stroke','#fff');p.setAttribute('stroke-width','2');svg.appendChild(p);
+    let mid=(a+b)/2,tx=cx+166*Math.cos(mid),ty=cy+166*Math.sin(mid),t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',tx);t.setAttribute('y',ty);t.setAttribute('fill','#fff');t.setAttribute('font-size',used.has(i)?'17':'15');
+    t.setAttribute('font-weight','900');t.setAttribute('text-anchor','middle');t.setAttribute('dominant-baseline','middle');
+    t.setAttribute('transform',`rotate(${mid*180/Math.PI+90} ${tx} ${ty})`);
+    t.textContent=used.has(i)?'✓':String(i+1).padStart(2,'0');svg.appendChild(t);
+  }
+  let c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx',250);c.setAttribute('cy',250);c.setAttribute('r',40);c.setAttribute('fill','#fff');c.setAttribute('stroke','#c7d2fe');c.setAttribute('stroke-width',5);svg.appendChild(c);
+  let t=document.createElementNS('http://www.w3.org/2000/svg','text');t.setAttribute('x',250);t.setAttribute('y',256);t.setAttribute('text-anchor','middle');t.setAttribute('font-size',16);t.setAttribute('font-weight',900);t.setAttribute('fill','#172554');t.textContent='IPAS';svg.appendChild(t);
+}
+let soundOn=true,busy=false,selected=-1,rotation=0,questionDone=false;
+function beep(freq=650){if(!soundOn)return;try{let c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.frequency.value=freq;g.gain.setValueAtTime(.04,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.12);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.12);o.onended=()=>c.close()}catch(e){}}
+function finishQuestion(){
+  if(selected<0||questionDone)return;
+  questionDone=true;used.add(selected);draw();
+  document.getElementById('again').disabled=false;
+  document.getElementById('spin').disabled=false;
+  document.getElementById('status').textContent=`Soal ${selected+1} selesai. ${used.size} dari ${data.length} soal sudah dijawab.`;
+  if(used.size===data.length){
+    document.getElementById('spin').disabled=true;
+    document.getElementById('again').disabled=true;
+    document.getElementById('status').textContent='🎉 Semua 21 soal sudah selesai! Tidak ada soal yang diulang.';
+    document.getElementById('heading').textContent='Semua soal selesai!';
+  }
+}
+function spin(){
+  if(busy|| (selected>=0&&!questionDone))return;
+  const remaining=data.map((_,i)=>i).filter(i=>!used.has(i));
+  if(!remaining.length){
+    document.getElementById('status').textContent='Semua soal sudah selesai!';
+    document.getElementById('spin').disabled=true;document.getElementById('again').disabled=true;return;
+  }
+  busy=true;selected=-1;questionDone=false;
+  document.getElementById('spin').disabled=true;document.getElementById('again').disabled=true;document.getElementById('reveal').disabled=true;
+  document.getElementById('card').classList.add('hidden');document.getElementById('empty').classList.remove('hidden');
+  document.getElementById('answer').classList.add('hidden');document.getElementById('choiceFeedback').classList.add('hidden');
+  document.getElementById('heading').textContent='Roda sedang berputar…';
+  document.getElementById('status').textContent='Tunggu sampai roda berhenti pada soal yang belum dijawab.';
+  let next=remaining[Math.floor(Math.random()*remaining.length)],step=360/data.length;
+  const target=(360-(next+.5)*step+360)%360;
+  const current=((rotation%360)+360)%360;
+  const delta=((target-current)+360)%360;
+  rotation+=360*6+delta;
+  svg.style.transition='transform 4.4s cubic-bezier(.12,.78,.12,1)';
+  svg.style.transform=`rotate(${rotation}deg)`;
+  let n=0,timer=setInterval(()=>{beep(450+n*20);n++;if(n>=12)clearInterval(timer)},300);
+  setTimeout(()=>{
+    busy=false;selected=next;
+    draw(next); // Pertahankan sudut putaran: roda tidak kembali ke posisi awal.
+    document.getElementById('empty').classList.add('hidden');document.getElementById('card').classList.remove('hidden');
+    document.getElementById('heading').textContent='Tantangan terpilih!';
+    document.getElementById('label').textContent='SOAL '+String(next+1).padStart(2,'0')+' DARI 21';
+    document.getElementById('question').textContent=data[next].q;document.getElementById('choices').innerHTML='';
+    document.getElementById('choiceFeedback').classList.add('hidden');
+    document.getElementById('answer').innerHTML='<strong>Jawaban benar: '+String.fromCharCode(65+data[next].c)+'. '+data[next].o[data[next].c]+'</strong><br>'+data[next].e;
+    document.getElementById('answer').classList.add('hidden');document.getElementById('reveal').textContent='💡 LIHAT JAWABAN';
+    data[next].o.forEach((option,i)=>{
+      let b=document.createElement('button');b.className='choice';
+      b.innerHTML='<b>'+String.fromCharCode(65+i)+'</b><span>'+option+'</span>';
+      b.onclick=()=>chooseOption(i,b);document.getElementById('choices').appendChild(b);
+    });
+    document.getElementById('spin').disabled=true;document.getElementById('again').disabled=true;document.getElementById('reveal').disabled=false;
+    document.getElementById('status').textContent='Pilih satu jawaban. Setelah dijawab, bagian roda akan menjadi hijau dan soal tidak akan diulang.';
+    beep(850);
+  },4500);
+}
+function chooseOption(i,btn){
+  if(selected<0||questionDone)return;
+  let q=data[selected],buttons=[...document.querySelectorAll('.choice')],fb=document.getElementById('choiceFeedback');
+  buttons.forEach((b,j)=>{b.disabled=true;if(j===q.c)b.classList.add('correct')});
+  if(i===q.c){fb.textContent='✅ Benar! Soal ditandai selesai.';beep(850)}
+  else{btn.classList.add('incorrect');fb.textContent='❌ Belum tepat. Jawaban benar ditandai hijau. Soal ditandai selesai.';beep(240)}
+  fb.classList.remove('hidden');finishQuestion();
+}
+function reveal(){
+  if(selected<0)return;
+  let a=document.getElementById('answer');a.classList.toggle('hidden');
+  document.getElementById('reveal').textContent=a.classList.contains('hidden')?'💡 LIHAT JAWABAN':'🙈 SEMBUNYIKAN JAWABAN';
+  if(!a.classList.contains('hidden'))finishQuestion();
+}
+document.getElementById('spin').onclick=spin;
+document.getElementById('again').onclick=spin;
+document.getElementById('reveal').onclick=reveal;
+document.getElementById('sound').onclick=()=>{soundOn=!soundOn;document.getElementById('sound').textContent=soundOn?'🔊 Suara: Aktif':'🔇 Suara: Mati';if(soundOn)beep()};
+draw();</script></body></html>
